@@ -15,16 +15,24 @@ class OpenAIConfig:
         Sends a prompt to the OpenAI API and returns the response text.
         Maintains conversation history for context.
         """
-        history.append({"role": "user", "content": prompt})
+        try:
+            system_prompt = "You are a helpful for people who are homeless. Provide concise and accurate information."
 
-        response = openai.ChatCompletion.create(
-            model=self.model,
-            messages=history
-        )
+            history.append({"role": "user", "content": prompt})
+            api_history = [{"role": "system", "content": system_prompt}]
 
-        reply = response.choices[0].message['content']
-        history.append({"role": "assistant", "content": reply})
-        return reply
+            response = openai.ChatCompletion.create(
+                model=self.model,
+                messages=api_history
+            )
+
+            reply = response.choices[0].message['content']
+            history.append({"role": "assistant", "content": reply})
+            return reply
+        
+        except Exception as e:
+            print(f"Error communicating with OpenAI API: {e}")
+            return "Sorry, I couldn't process your request at the moment. Please try again later."
     
 
     def get_history(self):
