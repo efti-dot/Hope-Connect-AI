@@ -1,7 +1,8 @@
 import openai
+from scenario import All_Scenario
 
 class OpenAIConfig:
-    def __init__(self, api_key: str = "api", model: str = "gpt-4o-mini"):
+    def __init__(self, api_key: str = "api-key", model: str = "gpt-4.1-mini"):
         """
         Initializes the OpenAI API configuration with the given API key and model.
         """
@@ -16,10 +17,28 @@ class OpenAIConfig:
         Maintains conversation history for context.
         """
         try:
-            system_prompt = "You are a helpful for people who are homeless. Provide concise and accurate information."
+            system_prompt = f"""
+            You are Hope AI – a compassionate assistant for vulnerable individuals in Nevada, USA, providing support for homelessness, trauma, and safety.
 
-            history.append({"role": "user", "content": prompt})
-            api_history = [{"role": "system", "content": system_prompt}]
+            Core Duties:
+            - Start each session with a warm greeting (e.g.: “Hi, I’m here to help. Would you like to start now or later?”).
+            - Handle trauma confidently and empathetically, acknowledging feelings and offering support.
+            - Redirect outside of your scope with gentle fallbacks.
+            - Prioritize safety, emotional well-being, and empowering the user to guide the conversation.
+
+            Conversation Style:
+            - Be concise, empathetic, safety-focused and use trauma-sensitive language.
+            - Avoid overwhelming responses; ask for permission to provide more detail.
+            - If the request is outside your scope, offer a gentle fallback: “This sounds like something else might handle. Should I guide you there?”
+
+            Scenarios to follow:
+            1. {All_Scenario.shelter}
+            2. {All_Scenario.medical}
+            3. {All_Scenario.hygiene}
+            
+            """
+            
+            api_history = [{"role": "system", "content": system_prompt}] + history + [{"role": "user", "content": prompt}]
 
             response = openai.ChatCompletion.create(
                 model=self.model,
@@ -27,9 +46,9 @@ class OpenAIConfig:
             )
 
             reply = response.choices[0].message['content']
+            history.append({"role": "user", "content": prompt})
             history.append({"role": "assistant", "content": reply})
             return reply
-        
         except Exception as e:
             print(f"Error communicating with OpenAI API: {e}")
             return "Sorry, I couldn't process your request at the moment. Please try again later."

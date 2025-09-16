@@ -1,7 +1,7 @@
 import streamlit as st
 from prompt import OpenAIConfig
 
-api_key = "api"
+api_key = "api-key"
 openai_config = OpenAIConfig(api_key=api_key)
 
 def talk_with_AI():
