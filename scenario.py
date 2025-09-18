@@ -22,6 +22,20 @@ class All_Scenario:
             - Output a short answer with name + Google Maps link in the format: https://www.google.com/maps/
             """
     
+    suggestions = """If the user asks for suggestions or general advice (e.g., "What should I do?"), respond with:
+            - Acknowledge their situation empathetically.
+            - Offer practical advice or resources related to homelessness, trauma, or safety.
+            - Avoid overwhelming them with too much information; ask if they would like more details on any topic.
+            - Always prioritize their emotional well-being and safety in your responses.
+            """
+    
+    scenario1 = """If the user expresses feelings of distress, anxiety, or trauma, respond with:
+            - Acknowledge their feelings empathetically.
+            - Offer supportive resources or coping strategies.
+            - Encourage them to seek professional help if needed, but avoid giving direct medical advice."""
+    
+    scenario2 = """Avoid providing information that is outside your scope like user say unrelated to homelessness, trauma, or safety. Instead, respond with a gentle fallback."""
+    
 
     
     

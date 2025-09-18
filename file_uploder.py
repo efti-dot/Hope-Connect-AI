@@ -8,6 +8,25 @@ KEYWORDS = [
     "education", "family", "housing", "hygiene", "meal", "pantry", "mental", "treatment"
 ]
 
+SEMANTIC_MAP = {
+    "hungry": ["food", "meal", "pantry"],
+    "eat": ["food", "meal"],
+    "doctor": ["medical", "treatment"],
+    "clinic": ["medical"],
+    "unsafe": ["shelter", "support", "abuse"],
+    "violence": ["abuse", "support"],
+    "shower": ["hygiene"],
+    "bathroom": ["hygiene"],
+    "school": ["education"],
+    "kids": ["family", "education"],
+    "home": ["housing", "shelter"],
+    "mental": ["mental", "treatment", "support"],
+    "cool": ["cooling"],
+    "hot": ["cooling"],
+    "harassment": ["abuse", "support"]
+}
+
+
 class file_uploder:
 
     def preprocess_csv(df):
@@ -24,7 +43,10 @@ class file_uploder:
         if not keywords:
             return pd.DataFrame()
         pattern = "|".join(keywords)
-        return df[df['Service_Type' or 'Category_New'].str.contains(pattern, case=False, na=False)]
+        mask_service = df['Service_Type'].str.contains(pattern, case=False, na=False)
+        mask_category = df['Category_New'].str.contains(pattern, case=False, na=False)
+        return df[mask_service | mask_category]
+
 
     def chunk_dataframe(df, max_chars=MAX_CHARS):
         chunks = []
