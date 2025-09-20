@@ -4,12 +4,14 @@ from prompt import OpenAIConfig
 from file_uploder import file_uploder
 from dotenv import load_dotenv
 import os
+from pipeline import HopePipeline
 
 load_dotenv()
 api_key = os.getenv("OPENAI_API_KEY")
 if not api_key:
     st.error("API key not found. Please set the OPENAI_API_KEY environment variable.")
 openai_config = OpenAIConfig(api_key=api_key)
+pipeline = HopePipeline(api_key=api_key)
 
 def handle_file_upload():
     st.sidebar.title("Upload a File")
@@ -57,28 +59,15 @@ def talk_with_AI():
         with st.chat_message("user"):
             st.markdown(user_input)
 
-        context = None
-        keywords = []
-
-        if 'csv_data' in st.session_state:
-            df = st.session_state['csv_data']
-            keywords = file_uploder.extract_keywords(user_input)
-            filtered_df = file_uploder.filter_by_keywords(df, keywords)
-
-            if not filtered_df.empty:
-                chunks = file_uploder.chunk_dataframe(filtered_df)
-                context = chunks[0]
-
         location = st.session_state.get('user_location', '')
-        if location:
-            user_input += f"\n\nMy current location is: {location}"
-        prompt = user_input
+        csv_data = st.session_state.get('csv_data', None)
+        history = st.session_state.messages
 
-        response = openai_config.get_response(prompt, st.session_state.messages, context=context if context else "")
-
+        response = pipeline.run(user_input, location, csv_data, history)
 
         with st.chat_message("assistant"):
             st.markdown(response)
+
 
 
 def main():

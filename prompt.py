@@ -49,8 +49,6 @@ class OpenAIConfig:
             )
 
             reply = response.choices[0].message['content']
-            history.append({"role": "user", "content": prompt})
-            history.append({"role": "assistant", "content": reply})
             return reply
         except Exception as e:
             print(f"Error communicating with OpenAI API: {e}")
