@@ -2,8 +2,13 @@ import streamlit as st
 import pandas as pd
 from prompt import OpenAIConfig
 from file_uploder import file_uploder
+from dotenv import load_dotenv
+import os
 
-api_key = "api-key"
+load_dotenv()
+api_key = os.getenv("OPENAI_API_KEY")
+if not api_key:
+    st.error("API key not found. Please set the OPENAI_API_KEY environment variable.")
 openai_config = OpenAIConfig(api_key=api_key)
 
 def handle_file_upload():

@@ -2,7 +2,7 @@ import openai
 from scenario import All_Scenario
 
 class OpenAIConfig:
-    def __init__(self, api_key: str = "api-key", model: str = "gpt-4.1-mini"):
+    def __init__(self, api_key: str = None, model: str = "gpt-4.1-mini"):
         """
         Initializes the OpenAI API configuration with the given API key and model.
         """
