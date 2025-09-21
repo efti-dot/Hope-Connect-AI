@@ -16,7 +16,7 @@ class HopePipeline:
         if csv_data is not None and keywords:
             filtered_df = file_uploder.filter_by_keywords(csv_data, keywords)
             if not filtered_df.empty:
-                chunks = file_uploder.chunk_dataframe(filtered_df)
+                chunks = file_uploder.chunk_dataframe(filtered_df) 
                 context = chunks[0]
 
         prompt = self.build_prompt(enriched_input, context)
@@ -33,20 +33,20 @@ class HopePipeline:
     def build_prompt(self, enriched_input, context):
         if context:
             return f"""
-User said: {enriched_input}
+                    User said: {enriched_input}
 
-Please respond with:
-1. A short, emotionally supportive message based on the user's need.
-2. Then suggest 1–3 nearby resources using the data provided below. Include name and Google Maps link if available.
+                    Please respond with:
+                    1. A short, emotionally supportive message based on the user's need.
+                    2. Then suggest 1 to 3 nearby resources using the data provided below. Include name and Google Maps link if available.
 
-Data:
-{context}
-"""
+                    Data:
+                    {context}
+                    """
         else:
             return f"""
-User said: {enriched_input}
+                    User said: {enriched_input}
 
-Please respond with:
-1. A short, emotionally supportive message based on the user's need.
-2. If no data is available, gently ask if the user would like to expand the search or clarify their request.
-"""
+                    Please respond with:
+                    1. A short, emotionally supportive message based on the user's need.
+                    2. If no data is available, gently ask if the user would like to expand the search or clarify their request.
+                    """
