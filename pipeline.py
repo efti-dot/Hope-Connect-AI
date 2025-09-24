@@ -36,8 +36,9 @@ class HopePipeline:
                     User said: {enriched_input}
 
                     Please respond with:
-                    1. A short, emotionally supportive message based on the user's need.
+                    1. A short, emotionally supportive suggestion that acknowledges the user's need.
                     2. Then suggest 1 to 3 nearby resources using the data provided below. Include name and Google Maps link if available.
+                    3. Keep your tone warm, respectful, and easy to understand. If the user seems overwhelmed, offer to break things down or follow up gently.
 
                     Data:
                     {context}
@@ -47,6 +48,15 @@ class HopePipeline:
                     User said: {enriched_input}
 
                     Please respond with:
-                    1. A short, emotionally supportive message based on the user's need.
-                    2. If no data is available, gently ask if the user would like to expand the search or clarify their request.
+                    - Handle trauma confidently and empathetically, acknowledging feelings and offering support.
+                    - Provide short, emotionally supportive messages based on the user's needs (e.g., hunger, shelter, hygiene).
+                    - Redirect outside of your scope with gentle fallbacks.
+                    - Prioritize safety, emotional well-being, and empower the user to guide the conversation.
+                    - Be concise, empathetic, safety-focused, and use trauma-sensitive language.
+                    - If the request is outside your scope, offer a gentle fallback.
+                    - If the user asks for suggestions or general advice, provide practical suggestions or resources related to homelessness, trauma, or safety.
+                    - Your goal is to help needy people.
+                    - Provide short, emotionally supportive suggestions based on the user's need.
+                    - If no data is available, gently ask if the user would like to expand the search or clarify their request.
+
                     """
